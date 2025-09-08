@@ -8,6 +8,10 @@ Shows you 2 Texts:
 
 Commands:
 /apd show/hide -- Shows/Hides the Attackpower Value
+
 /apd group show/hide -- Shows/Hides the Battleshout Group Check Window
+
 /apd mode 1/2 -- switches between the Display Modes mentioned above
+
 /apd lock/unlock -- locks/unlocks the windows, to reposition them
+
