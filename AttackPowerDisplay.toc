@@ -1,0 +1,6 @@
+## Interface: 11200
+## Title: AttackPowerDisplay
+## Notes: Anzeige der aktuellen Attackpower
+## Author: Celebrindal / Allapologies
+apdmain.lua
+## SavedVariables: APD_Saved
