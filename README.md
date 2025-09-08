@@ -7,6 +7,7 @@ Shows you 2 Texts:
 2. Only Group Members, who do not have Battleshout are displayed in red text
 
 Commands:
+
 /apd show/hide -- Shows/Hides the Attackpower Value
 
 /apd group show/hide -- Shows/Hides the Battleshout Group Check Window
