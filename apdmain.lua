@@ -139,31 +139,32 @@ local partyTexts = { bspmtextgrp1, bspmtextgrp2, bspmtextgrp3, bspmtextgrp4 }
 
 
 function bspmUpdate()
-	local i, name, text
-    for i = 1, 4 do
-        name = UnitName("party"..i)
-        text = partyTexts[i]
-        if name then
-            if apd_display_mode == 1 then
-                if HasBuffName("Battle Shout", "party"..i) then
-                    text:SetText("|cff00ff00" .. name .. "|r")
-                else
-                    text:SetText("|cffff0000" .. name .. "|r")
-                end
-                text:Show()
-            else -- Modus 2
-                if HasBuffName("Battle Shout", "party"..i) then
-                    text:Hide()
-                else
-                    text:SetText("|cffff0000" .. name .. "|r")
-                    text:Show()
-                end
-            end
-        else
-            text:Hide()
-        end
-    end
-
+	if APD_Saved.bspmbuttonvisibility == 1 then
+		local i, name, text
+		for i = 1, 4 do
+			name = UnitName("party"..i)
+			text = partyTexts[i]
+			if name then
+				if apd_display_mode == 1 then
+					if HasBuffName("Battle Shout", "party"..i) then
+						text:SetText("|cff00ff00" .. name .. "|r")
+					else
+						text:SetText("|cffff0000" .. name .. "|r")
+					end
+					text:Show()
+				else -- Modus 2
+					if HasBuffName("Battle Shout", "party"..i) then
+						text:Hide()
+					else
+						text:SetText("|cffff0000" .. name .. "|r")
+						text:Show()
+					end
+				end
+			else
+				text:Hide()
+			end
+		end
+	end
 end
 
 
@@ -174,13 +175,11 @@ bspmbutton:RegisterEvent('PLAYER_LOGIN')
 
 bspmbutton:SetScript('OnEvent', function()
 	local _,class = UnitClass('player')
-	
+
 	if class == 'WARRIOR' then
 		bspmUpdate()
 	end
 end)
-
-
 
 
 
@@ -225,12 +224,16 @@ function SlashCmdList.AttackPowerDisplay(msg)
 		BSPMMainFrame:Show()
 		elseif msg == 'group hide' then
 		bspmbutton:Hide()
+		APD_Saved.bspmbuttonvisibility = 0
 		elseif msg == 'group show' then
 		bspmbutton:Show()
+		APD_Saved.bspmbuttonvisibility = 1
 		elseif msg == 'hide' then
 		apdbutton:Hide()
+		APD_Saved.apdbuttonvisibility = 0
 		elseif msg == 'show' then
 		apdbutton:Show()
+		APD_Saved.apdbuttonvisibility = 1
 		elseif msg == 'mode 1' then
 		apd_display_mode = 1
 		APD_Saved.apd_display_mode = 1
@@ -261,4 +264,21 @@ apdinitFrame:SetScript("OnEvent", function()
         BSPMMainFrame:ClearAllPoints()
         BSPMMainFrame:SetPoint(t[1], UIParent, t[2], t[3], t[4])
     end
+	if not APD_Saved.apdbuttonvisibility then
+		APD_Saved.apdbuttonvisibility = 1
+	end
+	if not APD_Saved.bspmbuttonvisibility then
+		APD_Saved.bspmbuttonvisibility = 1
+	end
+	if APD_Saved.apdbuttonvisibility then
+		if APD_Saved.apdbuttonvisibility == 0 then
+			apdbutton:Hide()
+		end
+	end
+	if APD_Saved.bspmbuttonvisibility then
+		if APD_Saved.bspmbuttonvisibility == 0 then
+			bspmbutton:Hide()
+		end
+	end
+
 end)
