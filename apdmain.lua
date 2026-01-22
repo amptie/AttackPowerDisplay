@@ -168,16 +168,28 @@ function bspmUpdate()
 end
 
 
-bspmbutton:RegisterEvent('UNIT_AURA')
-bspmbutton:RegisterEvent('PARTY_MEMBERS_CHANGED')
 bspmbutton:RegisterEvent('PLAYER_LOGIN')
 
-
 bspmbutton:SetScript('OnEvent', function()
-	local _,class = UnitClass('player')
+	if event == 'PLAYER_LOGIN' then
+		local _,class = UnitClass('player')
+		if class == 'WARRIOR' then
+			bspmUpdate()
+		end
+	end
+end)
 
-	if class == 'WARRIOR' then
-		bspmUpdate()
+-- Timer für bspmUpdate() alle 2 Sekunden
+local bspmUpdateTimer = CreateFrame("Frame")
+local bspmLastUpdateTime = GetTime()
+bspmUpdateTimer:SetScript("OnUpdate", function()
+	local currentTime = GetTime()
+	if currentTime - bspmLastUpdateTime >= 2.0 then
+		bspmLastUpdateTime = currentTime
+		local _,class = UnitClass('player')
+		if class == 'WARRIOR' then
+			bspmUpdate()
+		end
 	end
 end)
 
@@ -274,11 +286,11 @@ apdinitFrame:SetScript("OnEvent", function()
 		if APD_Saved.apdbuttonvisibility == 0 then
 			apdbutton:Hide()
 		end
-	end
+	end	
 	if APD_Saved.bspmbuttonvisibility then
 		if APD_Saved.bspmbuttonvisibility == 0 then
 			bspmbutton:Hide()
 		end
-	end
-
+	end		
+	
 end)
