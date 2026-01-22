@@ -2,5 +2,7 @@
 ## Title: AttackPowerDisplay
 ## Notes: Anzeige der aktuellen Attackpower
 ## Author: Celebrindal / Allapologies
+## Version: 1.1
 apdmain.lua
+
 ## SavedVariables: APD_Saved
